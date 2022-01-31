@@ -1,11 +1,12 @@
 import React from 'react';
-import Layout from '../../Layout';
+import Header from '../../Header';
 
 const SignUpPage = () => {
 	return (
-		<Layout>
+		<>
+			<Header />
 			<div>Signup</div>
-		</Layout>
+		</>
 	);
 };
 

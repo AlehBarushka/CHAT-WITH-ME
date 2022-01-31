@@ -1,20 +1,12 @@
-import { Formik } from 'formik';
 import React from 'react';
-import Layout from '../../Layout';
-import Card from '../../Layout/UI/Card';
+import Header from '../../Header';
+import LoginForm from './LoginForm';
 
-import './style.css';
-
-const LoginPage = () => {
+const LoginPage = (props) => {
 	return (
 		<>
-			<Layout />
-			<div className='login-container'>
-				<Card>
-					<Formik />
-					form
-				</Card>
-			</div>
+			<Header />
+			<LoginForm />
 		</>
 	);
 };

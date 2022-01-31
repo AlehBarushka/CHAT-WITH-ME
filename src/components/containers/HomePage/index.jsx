@@ -1,10 +1,10 @@
 import React from 'react';
-import Layout from '../../Layout';
+import Header from '../../Header';
 
 const HomePage = (props) => {
 	return (
 		<>
-			<Layout />
+			<Header />
 			<div>Home Page</div>
 		</>
 	);
