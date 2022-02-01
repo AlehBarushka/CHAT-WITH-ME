@@ -1,30 +1,44 @@
-const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
+import { authConstant } from '../actions/constatnts';
 
-let initialState = {
-	currentUser: null,
+const initState = {
+	userName: '',
+	email: '',
 	isAuth: false,
+	isAuthing: false,
+	error: null,
 };
 
-const auth = (state = initialState, action) => {
-	let stateCopy;
-
+const authReducer = (state = initState, action) => {
+	console.log(action);
 	switch (action.type) {
-		case SET_AUTH_USER_DATA:
-			stateCopy = { ...state, ...action.data, isAuth: true };
-			return stateCopy;
+		case authConstant.USER_LOGIN_REQUEST:
+			state = {
+				...state,
+				isAuthing: true,
+			};
+			return state;
+
+		case authConstant.USER_LOGIN_SUCCESS:
+			state = {
+				...state,
+				...action.payload.user,
+				isAuth: true,
+				isAuthing: false,
+			};
+			return state;
+
+		case authConstant.USER_LOGIN_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+				isAuth: false,
+				isAuthing: false,
+			};
+			return state;
 
 		default:
 			return state;
 	}
 };
 
-export const setAuthUserDataAC = (userId, email, login) => ({
-	type: SET_AUTH_USER_DATA,
-	data: { userId, email, login },
-});
-
-export const getAuthUserData = () => {
-	return (dispatch) => {};
-};
-
-export default auth;
+export default authReducer;
