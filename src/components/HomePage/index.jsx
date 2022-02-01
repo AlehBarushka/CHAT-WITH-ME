@@ -1,11 +1,9 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
+import Chat from './Chat';
 
-const HomePage = (props) => {
-	return (
-		<>
-			<div>Home Page</div>
-		</>
-	);
+const HomePage = ({ auth }) => {
+	return auth.isAuth ? <Chat /> : <Navigate to='/login' />;
 };
 
 export default HomePage;
