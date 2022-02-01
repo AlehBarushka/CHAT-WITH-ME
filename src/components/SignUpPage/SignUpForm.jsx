@@ -16,7 +16,6 @@ const SignUpForm = () => {
 	const registerUser = (values) => {
 		dispatch(signUp(values));
 	};
-
 	return (
 		<div className='container mx-auto p-4 bg-white'>
 			<div className='w-full md:w-1/2 lg:w-1/3 mx-auto my-12'>
