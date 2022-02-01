@@ -2,20 +2,25 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import React from 'react';
+import { signIn } from '../../actions';
+import { useDispatch } from 'react-redux';
+
+const logInValidation = Yup.object().shape({
+	email: Yup.string().email('Email не верного формата').required('Пожалуйста, введите email'),
+	password: Yup.string().required('Пожалуйста, введите пароль'),
+});
 
 const LoginForm = (props) => {
-	const logInValidation = Yup.object().shape({
-		email: Yup.string().email('Email не верного формата').required('Пожалуйста, введите email'),
-		password: Yup.string().required('Пожалуйста, введите пароль'),
-	});
+	const dispatch = useDispatch();
+
+	const signInUser = (values) => {
+		dispatch(signIn(values));
+	};
+
 	return (
 		<div className='container mx-auto p-4 bg-white'>
 			<div className='w-full md:w-1/2 lg:w-1/3 mx-auto my-12'>
-				<Formik
-					initialValues={{ email: '', password: '' }}
-					validationSchema={logInValidation}
-					onSubmit={(values) => console.log(values)}
-				>
+				<Formik initialValues={{ email: '', password: '' }} validationSchema={logInValidation} onSubmit={signInUser}>
 					{({ errors, touched }) => (
 						<Form className='flex flex-col mt-4'>
 							<div className='mb-4'>
