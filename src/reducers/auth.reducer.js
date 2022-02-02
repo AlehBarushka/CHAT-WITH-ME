@@ -2,6 +2,7 @@ import { authConstant } from '../actions/constatnts';
 
 const initState = {
 	userName: '',
+	uid: '',
 	email: '',
 	isAuth: false,
 	isAuthing: false,
@@ -33,6 +34,25 @@ const authReducer = (state = initState, action) => {
 				error: action.payload.error,
 				isAuth: false,
 				isAuthing: false,
+			};
+			return state;
+
+		case authConstant.USER_LOGOUT_REQUEST:
+			return state;
+
+		case authConstant.USER_LOGOUT_SUCCESS:
+			state = {
+				...state,
+				userName: '',
+				email: '',
+				uid: '',
+			};
+			return state;
+
+		case authConstant.USER_LOGOUT_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
 			};
 			return state;
 
