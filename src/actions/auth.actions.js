@@ -2,6 +2,7 @@ import {
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
 	signInWithEmailAndPassword,
+	signOut,
 	updateProfile,
 } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
@@ -10,6 +11,7 @@ import { authConstant } from './constatnts';
 
 export const signUp = (user) => {
 	return (dispatch) => {
+		console.log('sigUP');
 		dispatch({ type: authConstant.USER_LOGIN_REQUEST });
 		createUserWithEmailAndPassword(auth, user.email, user.password)
 			.then((response) => {
@@ -36,10 +38,10 @@ export const signUp = (user) => {
 
 export const signIn = (user) => {
 	return (dispatch) => {
+		console.log('sigIn');
 		dispatch({ type: authConstant.USER_LOGIN_REQUEST });
 		signInWithEmailAndPassword(auth, user.email, user.password)
 			.then((response) => {
-				console.log('sigIn');
 				const loggedInUser = {
 					userName: response.user.displayName,
 					uid: response.user.uid,
@@ -56,9 +58,9 @@ export const signIn = (user) => {
 
 export const autoSignIn = () => {
 	return (dispatch) => {
+		console.log('autoSignIn');
 		dispatch({ type: authConstant.USER_LOGIN_REQUEST });
 		onAuthStateChanged(auth, (user) => {
-			console.log('autoSignIn');
 			if (user) {
 				const loggedInUser = {
 					userName: user.displayName,
@@ -70,5 +72,20 @@ export const autoSignIn = () => {
 				dispatch({ type: authConstant.USER_LOGIN_FAILURE, payload: { error: 'Login again please' } });
 			}
 		});
+	};
+};
+
+export const logout = () => {
+	return (dispatch) => {
+		console.log('logOut');
+		dispatch({ type: authConstant.USER_LOGOUT_REQUEST });
+		signOut(auth)
+			.then(() => {
+				dispatch({ type: authConstant.USER_LOGOUT_SUCCESS });
+			})
+			.catch((error) => {
+				console.log(error);
+				dispatch({ type: authConstant.USER_LOGOUT_FAILURE, payload: { error: error.message } });
+			});
 	};
 };
