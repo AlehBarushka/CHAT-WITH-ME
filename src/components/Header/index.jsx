@@ -1,12 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions/auth.actions';
 
 const Header = (props) => {
 	const dispatch = useDispatch();
+	const uid = useSelector((state) => state.auth.uid);
 	const logoutUser = () => {
-		dispatch(logout());
+		dispatch(logout(uid));
 	};
 	return (
 		<header className='flex items-center justify-between flex-wrap bg-blue-500 p-6'>

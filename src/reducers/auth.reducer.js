@@ -1,4 +1,4 @@
-import { authConstant } from '../actions/constatnts';
+import { authConstants } from '../actions/constatnts';
 
 const initState = {
 	userName: '',
@@ -12,14 +12,14 @@ const initState = {
 const authReducer = (state = initState, action) => {
 	console.log(action);
 	switch (action.type) {
-		case authConstant.USER_LOGIN_REQUEST:
+		case authConstants.USER_LOGIN_REQUEST:
 			state = {
 				...state,
 				isAuthing: true,
 			};
 			return state;
 
-		case authConstant.USER_LOGIN_SUCCESS:
+		case authConstants.USER_LOGIN_SUCCESS:
 			state = {
 				...state,
 				...action.payload.user,
@@ -28,7 +28,7 @@ const authReducer = (state = initState, action) => {
 			};
 			return state;
 
-		case authConstant.USER_LOGIN_FAILURE:
+		case authConstants.USER_LOGIN_FAILURE:
 			state = {
 				...state,
 				error: action.payload.error,
@@ -37,10 +37,10 @@ const authReducer = (state = initState, action) => {
 			};
 			return state;
 
-		case authConstant.USER_LOGOUT_REQUEST:
+		case authConstants.USER_LOGOUT_REQUEST:
 			return state;
 
-		case authConstant.USER_LOGOUT_SUCCESS:
+		case authConstants.USER_LOGOUT_SUCCESS:
 			state = {
 				...state,
 				userName: '',
@@ -49,7 +49,7 @@ const authReducer = (state = initState, action) => {
 			};
 			return state;
 
-		case authConstant.USER_LOGOUT_FAILURE:
+		case authConstants.USER_LOGOUT_FAILURE:
 			state = {
 				...state,
 				error: action.payload.error,
