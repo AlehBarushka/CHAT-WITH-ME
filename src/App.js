@@ -1,37 +1,33 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { autoSignIn } from './actions';
 
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
-
 import Header from './components/Header';
-import { connect, useDispatch } from 'react-redux';
-import { autoSignIn } from './actions';
 
-const App = (props) => {
+const App = () => {
 	const dispatch = useDispatch();
+	const auth = useSelector((state) => state.auth);
 
 	useEffect(() => {
-		if (!props.auth.isAuth) {
+		if (!auth.isAuth) {
 			dispatch(autoSignIn());
 		}
-	}, [dispatch, props.auth.isAuth]);
+	}, [dispatch, auth.isAuth]);
 
 	return (
 		<Router>
-			<Header {...props} />
+			<Header />
 			<Routes>
-				<Route path='/' element={<HomePage {...props} />} />
-				<Route path='/login' element={<LoginPage {...props} />} />
-				<Route path='/signup' element={<SignUpPage {...props} />} />
+				<Route path='/' element={<HomePage auth={auth} />} />
+				<Route path='/login' element={<LoginPage auth={auth} />} />
+				<Route path='/signup' element={<SignUpPage auth={auth} />} />
 			</Routes>
 		</Router>
 	);
 };
 
-const mapStateToProps = (state) => {
-	return { auth: state.auth };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
