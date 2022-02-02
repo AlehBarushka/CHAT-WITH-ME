@@ -34,7 +34,6 @@ const Chat = () => {
 	const initChat = (user) => {
 		setChatStarted(true);
 		setChatUser(user.userName);
-		debugger;
 	};
 
 	return (
