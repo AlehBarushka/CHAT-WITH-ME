@@ -11,56 +11,51 @@ import { authConstants } from './constatnts';
 
 export const signUp = (user) => {
 	return async (dispatch) => {
-		console.log('sigUP');
 		dispatch({ type: authConstants.USER_LOGIN_REQUEST });
-		createUserWithEmailAndPassword(auth, user.email, user.password)
-			.then((response) => {
-				updateProfile(auth.currentUser, { displayName: user.userName });
-				setDoc(doc(db, 'users', response.user.uid), {
-					userName: user.userName,
-					uid: response.user.uid,
-					createdAt: new Date(),
-					isOnline: true,
-				}).then(() => {
-					const loggedInUser = {
-						userName: user.userName,
-						uid: response.user.uid,
-						email: user.email,
-					};
-					dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: { user: loggedInUser } });
-				});
-			})
-			.catch((error) => {
-				dispatch({ type: authConstants.USER_LOGIN_FAILURE, payload: { error: error.message } });
+		try {
+			let response = await createUserWithEmailAndPassword(auth, user.email, user.password);
+			updateProfile(auth.currentUser, { displayName: user.userName });
+			setDoc(doc(db, 'users', response.user.uid), {
+				userName: user.userName,
+				uid: response.user.uid,
+				createdAt: new Date(),
+				isOnline: true,
 			});
+			const loggedInUser = {
+				userName: user.userName,
+				uid: response.user.uid,
+				email: user.email,
+			};
+			dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: { user: loggedInUser } });
+		} catch (error) {
+			dispatch({ type: authConstants.USER_LOGIN_FAILURE, payload: { error: error.message } });
+		}
 	};
 };
 
 export const signIn = (user) => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch({ type: authConstants.USER_LOGIN_REQUEST });
-		signInWithEmailAndPassword(auth, user.email, user.password)
-			.then((response) => {
-				const ref = doc(db, 'users', response.user.uid);
-				updateDoc(ref, {
-					isOnline: true,
-				});
-				const loggedInUser = {
-					userName: response.user.displayName,
-					uid: response.user.uid,
-					email: response.user.email,
-				};
-				dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: { user: loggedInUser } });
-			})
-			.catch((error) => {
-				dispatch({ type: authConstants.USER_LOGIN_FAILURE, payload: { error: error.message } });
+		try {
+			let response = await signInWithEmailAndPassword(auth, user.email, user.password);
+			const ref = doc(db, 'users', response.user.uid);
+			updateDoc(ref, {
+				isOnline: true,
 			});
+			const loggedInUser = {
+				userName: response.user.displayName,
+				uid: response.user.uid,
+				email: response.user.email,
+			};
+			dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: { user: loggedInUser } });
+		} catch (error) {
+			dispatch({ type: authConstants.USER_LOGIN_FAILURE, payload: { error: error.message } });
+		}
 	};
 };
 
 export const autoSignIn = () => {
 	return (dispatch) => {
-		console.log('autoSignIn');
 		dispatch({ type: authConstants.USER_LOGIN_REQUEST });
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
@@ -79,14 +74,14 @@ export const autoSignIn = () => {
 
 export const logout = (uid) => {
 	return async (dispatch) => {
+		dispatch({ type: authConstants.USER_LOGOUT_REQUEST });
 		try {
-			await dispatch({ type: authConstants.USER_LOGOUT_REQUEST });
 			const ref = doc(db, 'users', uid);
-			await updateDoc(ref, {
+			updateDoc(ref, {
 				isOnline: false,
 			});
-			await signOut(auth);
-			await dispatch({ type: authConstants.USER_LOGOUT_SUCCESS });
+			signOut(auth);
+			dispatch({ type: authConstants.USER_LOGOUT_SUCCESS });
 		} catch (error) {
 			console.log(error);
 			dispatch({ type: authConstants.USER_LOGOUT_FAILURE, payload: { error: error.message } });
