@@ -1,45 +1,42 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateMessage } from '../../actions';
+import Message from './Message';
 
 const ChatArea = (props) => {
-	const { userName } = props;
+	const { auth, recipientUid, conversations, recipientUserName, message, setMessage } = props;
+	const dispatch = useDispatch();
+
+	let messages = conversations.map((messages) => (
+		<Message auth={auth} key={messages.createdAt.seconds} uid={messages.senderUid} message={messages.message} />
+	));
+
+	const sendMessage = () => {
+		const messageObj = {
+			senderUid: auth.uid,
+			recipientUid: recipientUid,
+			message,
+		};
+		if (message !== '') {
+			dispatch(updateMessage(messageObj));
+			setMessage('');
+		}
+	};
 
 	return (
 		<>
 			<div className='w-full'>
-				<div className='relative flex items-center p-3 border-b border-gray-300'>
+				<div className='flex items-center justify-center p-3 border-b border-gray-300'>
 					<img
 						className='object-cover w-10 h-10 rounded-full'
-						src='https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083383__340.jpg'
-						alt='username'
+						src='https://www.opensds.io/wp-content/uploads/sites/18/2019/03/user-unknown-1-300x300.png'
+						alt='userAvatar'
 					/>
-					<span className='block ml-2 font-bold text-gray-600'>{userName}</span>
-					<span className='absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3'></span>
+					<span className='block ml-2 font-bold text-gray-600'>{recipientUserName}</span>
 				</div>
-				<div className='relative w-full p-6 overflow-y-auto h-[40rem]'>
-					<ul className='space-y-2'>
-						<li className='flex justify-start'>
-							<div className='relative max-w-xl px-4 py-2 text-gray-700 rounded shadow'>
-								<span className='block'>Hi</span>
-							</div>
-						</li>
-						<li className='flex justify-end'>
-							<div className='relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow'>
-								<span className='block'>Hiiii</span>
-							</div>
-						</li>
-						<li className='flex justify-end'>
-							<div className='relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow'>
-								<span className='block'>how are you?</span>
-							</div>
-						</li>
-						<li className='flex justify-start'>
-							<div className='relative max-w-xl px-4 py-2 text-gray-700 rounded shadow'>
-								<span className='block'>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</span>
-							</div>
-						</li>
-					</ul>
+				<div className='w-full p-6 overflow-y-auto h-[40rem]'>
+					<div className='flex flex-col'>{messages}</div>
 				</div>
-
 				<div className='flex items-center justify-between w-full p-3 border-t border-gray-300'>
 					<button>
 						<svg
@@ -73,31 +70,18 @@ const ChatArea = (props) => {
 							/>
 						</svg>
 					</button>
-
 					<input
 						type='text'
 						placeholder='Message'
 						className='block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700'
 						name='message'
+						onChange={(e) => {
+							setMessage(e.target.value);
+						}}
+						value={message}
 						required
 					/>
-					<button>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							className='w-5 h-5 text-gray-500'
-							fill='none'
-							viewBox='0 0 24 24'
-							stroke='currentColor'
-						>
-							<path
-								strokeLinecap='round'
-								strokeLinejoin='round'
-								strokeWidth='2'
-								d='M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z'
-							/>
-						</svg>
-					</button>
-					<button type='submit'>
+					<button onClick={sendMessage}>
 						<svg
 							className='w-5 h-5 text-gray-500 origin-center transform rotate-90'
 							xmlns='http://www.w3.org/2000/svg'
