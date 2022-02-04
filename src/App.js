@@ -22,7 +22,7 @@ const App = () => {
 		<Router>
 			<Header />
 			<Routes>
-				<Route path='/' element={<HomePage auth={auth} />} />
+				<Route path='/home' element={<HomePage auth={auth} />} />
 				<Route path='/login' element={<LoginPage auth={auth} />} />
 				<Route path='/signup' element={<SignUpPage auth={auth} />} />
 			</Routes>
