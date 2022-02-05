@@ -43,8 +43,8 @@ const Chat = () => {
 	return (
 		<div className='mt-5 lg:mt-10 md:mt-10 sm:mt-10 container mx-auto'>
 			<div className='min-w-full border rounded grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1'>
-				<div className='border-r border-gray-300'>
-					<div className='mx-3 my-3'>
+				<div className='lg:border-r md:border-r border-gray-300'>
+					{/* <div className='mx-3 my-3'>
 						<div className='relative text-gray-600'>
 							<span className='absolute inset-y-0 left-0 flex items-center pl-2'>
 								<svg
@@ -67,9 +67,9 @@ const Chat = () => {
 								required
 							/>
 						</div>
-					</div>
+					</div> */}
 
-					<ul className='overflow-auto h-[12rem]'>
+					<ul className='overflow-y-auto h-[40rem]'>
 						<h2 className='my-2 mb-2 ml-2 text-lg text-gray-600'>Пользователи</h2>
 						{chat.users.length > 0
 							? chat.users.map((user) => {
@@ -78,7 +78,7 @@ const Chat = () => {
 							: null}
 					</ul>
 				</div>
-				<div className='border-l lg:col-span-3 md:col-span-2 sm:col-span-1'>
+				<div className='lg:col-span-3 md:col-span-2 sm:col-span-1'>
 					{chatStarted ? (
 						<ChatArea
 							conversations={chat.conversations}

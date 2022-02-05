@@ -16,9 +16,13 @@ const User = (props) => {
 				<div className='w-full pb-2'>
 					<div className='flex justify-between'>
 						<span className='block ml-2 font-semibold text-gray-600'>{user.userName}</span>
-						<span className={user.isOnline ? 'inline-block w-2 h-2 bg-green-400 rounded-full shadow' : ''}></span>
+						<span
+							className={
+								user.isOnline ? 'inline-block w-2 h-2 bg-green-400 rounded-full shadow shadow-green-500/50' : ''
+							}
+						></span>
 					</div>
-					<span className='block ml-2 text-sm text-gray-600'>последнее сообщение</span>
+					<span className='block ml-2 text-sm text-gray-400'>последнее сообщение</span>
 				</div>
 			</div>
 		</>
