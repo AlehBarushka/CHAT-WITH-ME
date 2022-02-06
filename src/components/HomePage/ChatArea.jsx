@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../actions';
 import Message from './Message';
+import { useEffect } from 'react';
 
 const ChatArea = (props) => {
 	const { auth, recipientUid, conversations, recipientUserName, message, setMessage } = props;
 	const dispatch = useDispatch();
+	const messagesEndRef = useRef(null);
 
-	let messages = conversations.map((messages) => (
-		<Message auth={auth} key={messages.createdAt.seconds} uid={messages.senderUid} message={messages.message} />
-	));
+	useEffect(() => {
+		debugger;
+		messagesEndRef.current?.scrollIntoView();
+	}, [conversations]);
 
 	const sendMessage = () => {
 		const messageObj = {
@@ -35,7 +38,17 @@ const ChatArea = (props) => {
 					<span className='block ml-2 font-bold text-gray-600'>{recipientUserName}</span>
 				</div>
 				<div className='w-full p-6 overflow-y-auto h-[40rem]'>
-					<div className='flex flex-col'>{messages}</div>
+					<div className='flex flex-col'>
+						{conversations.map((messages) => (
+							<Message
+								auth={auth}
+								key={messages.createdAt.seconds}
+								uid={messages.senderUid}
+								message={messages.message}
+							/>
+						))}
+						<div ref={messagesEndRef} />
+					</div>
 				</div>
 				<div className='flex items-center justify-between w-full p-3 border-t border-gray-300'>
 					<button>
