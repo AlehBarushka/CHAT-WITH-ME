@@ -24,12 +24,11 @@ export const getRealTimeUsers = (uid) => {
 
 export const updateMessage = (messageObj) => {
 	return async (dispatch) => {
-		let response = await addDoc(collection(db, 'conversations'), {
+		await addDoc(collection(db, 'conversations'), {
 			...messageObj,
 			isView: false,
 			createdAt: new Date(),
 		});
-		console.log(response);
 	};
 };
 
