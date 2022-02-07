@@ -27,6 +27,12 @@ const ChatArea = (props) => {
 		}
 	};
 
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter') {
+			sendMessage();
+		}
+	};
+
 	return (
 		<div className='w-full'>
 			<div className='flex items-center justify-center p-3 border-b border-gray-300'>
@@ -83,6 +89,7 @@ const ChatArea = (props) => {
 					placeholder='Message'
 					className='block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700'
 					name='message'
+					onKeyDown={handleKeyDown}
 					onChange={(e) => {
 						setMessage(e.target.value);
 					}}
