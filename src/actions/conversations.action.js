@@ -6,7 +6,6 @@ export const updateMessage = (messageObj) => {
 	return (dispatch) => {
 		addDoc(collection(db, 'conversations'), {
 			...messageObj,
-			isView: false,
 			createdAt: new Date(),
 		});
 	};
