@@ -12,13 +12,7 @@ const Header = () => {
 	};
 	return (
 		<header className='flex items-center justify-between flex-wrap bg-blue-500 p-6'>
-			<Link
-				to={'/home'}
-				onClick={() => {
-					alert('переход на страницу');
-				}}
-				className='font-semibold text-xl text-white tracking-tight'
-			>
+			<Link to={'/home'} className='font-semibold text-xl text-white tracking-tight'>
 				CHAT-WITH-ME
 			</Link>
 			<div className='font-semibold text-xl text-white tracking-tight'>{`Hello ${auth.userName}!`}</div>

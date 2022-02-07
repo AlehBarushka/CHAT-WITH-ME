@@ -1,11 +1,11 @@
 import { userConstants } from '../actions/constatnts';
 
 const initState = {
+	messages: [],
 	users: [],
-	conversations: [],
 };
 
-const chatReducer = (state = initState, action) => {
+const conversationsReducer = (state = initState, action) => {
 	switch (action.type) {
 		case userConstants.GET_REALTIME_USERS_REQUEST:
 			return state;
@@ -15,14 +15,13 @@ const chatReducer = (state = initState, action) => {
 				users: action.payload.users,
 			};
 			return state;
-
 		case userConstants.GET_REALTIME_MESSAGES_REQUEST:
 			return state;
 
 		case userConstants.GET_REALTIME_MESSAGES_SUCCESS:
 			state = {
 				...state,
-				conversations: action.payload.conversations,
+				messages: action.payload.conversations,
 			};
 			return state;
 
@@ -31,4 +30,4 @@ const chatReducer = (state = initState, action) => {
 	}
 };
 
-export default chatReducer;
+export default conversationsReducer;

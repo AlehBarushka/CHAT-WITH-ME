@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getRealTimeConversations, getRealTimeUsers } from '../../actions/users.actions';
+import { getRealTimeMessages, getRealTimeUsers } from '../../actions';
 import ChatArea from './ChatArea';
 import ChatPreview from './ChatPreview';
 import UsersArea from './UsersArea';
@@ -9,7 +9,7 @@ import UsersArea from './UsersArea';
 const Chat = () => {
 	const dispatch = useDispatch();
 	const auth = useSelector((state) => state.auth);
-	const chat = useSelector((state) => state.chat);
+	const conversations = useSelector((state) => state.conversations);
 	const [chatStarted, setChatStarted] = useState(false);
 	const [recipientUserName, setRecipientUserName] = useState('');
 	const [message, setMessage] = useState('');
@@ -19,7 +19,7 @@ const Chat = () => {
 		setChatStarted(true);
 		setRecipientUserName(user.userName);
 		setRecipientUid(user.uid);
-		dispatch(getRealTimeConversations({ senderUid: auth.uid, recipientUid: user.uid }));
+		dispatch(getRealTimeMessages({ senderUid: auth.uid, recipientUid: user.uid }));
 	};
 
 	// subcribe for realtime update users and unsubscribe after unmount
@@ -43,11 +43,11 @@ const Chat = () => {
 	return (
 		<div className='mt-5 lg:mt-10 md:mt-10 sm:mt-10 container mx-auto'>
 			<div className='min-w-full border rounded grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-1'>
-				<UsersArea initChat={initChat} users={chat.users} />
+				<UsersArea initChat={initChat} users={conversations.users} />
 				<div className='lg:col-span-3 md:col-span-2 sm:col-span-1'>
 					{chatStarted ? (
 						<ChatArea
-							conversations={chat.conversations}
+							conversations={conversations}
 							auth={auth}
 							recipientUserName={recipientUserName}
 							senderUser={auth}

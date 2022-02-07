@@ -1,26 +1,6 @@
-import { userConstants } from './constatnts';
-import { collection, query, onSnapshot, where, addDoc, orderBy } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { db } from '../service/firebaseConfig';
-
-export const getRealTimeUsers = (uid) => {
-	return async (dispatch) => {
-		dispatch({ type: userConstants.GET_REALTIME_USERS_REQUEST });
-		const q = query(collection(db, 'users'), where('uid', '!=', uid));
-		const unsubscribe = onSnapshot(q, (querySnapshot) => {
-			const users = [];
-			querySnapshot.forEach((doc) => {
-				users.push(doc.data());
-			});
-			dispatch({
-				type: userConstants.GET_REALTIME_USERS_SUCCESS,
-				payload: {
-					users,
-				},
-			});
-		});
-		return unsubscribe;
-	};
-};
+import { userConstants } from './constatnts';
 
 export const updateMessage = (messageObj) => {
 	return async (dispatch) => {
@@ -32,7 +12,7 @@ export const updateMessage = (messageObj) => {
 	};
 };
 
-export const getRealTimeConversations = (user) => {
+export const getRealTimeMessages = (user) => {
 	return async (dispatch) => {
 		dispatch({ type: userConstants.GET_REALTIME_MESSAGES_REQUEST });
 		const q = query(
@@ -51,6 +31,26 @@ export const getRealTimeConversations = (user) => {
 				}
 			});
 			dispatch({ type: userConstants.GET_REALTIME_MESSAGES_SUCCESS, payload: { conversations } });
+		});
+		return unsubscribe;
+	};
+};
+
+export const getRealTimeUsers = (uid) => {
+	return async (dispatch) => {
+		dispatch({ type: userConstants.GET_REALTIME_USERS_REQUEST });
+		const q = query(collection(db, 'users'), where('uid', '!=', uid));
+		const unsubscribe = onSnapshot(q, (querySnapshot) => {
+			const users = [];
+			querySnapshot.forEach((doc) => {
+				users.push(doc.data());
+			});
+			dispatch({
+				type: userConstants.GET_REALTIME_USERS_SUCCESS,
+				payload: {
+					users,
+				},
+			});
 		});
 		return unsubscribe;
 	};
