@@ -8,8 +8,8 @@ const Message = (props) => {
 			<p
 				className={
 					auth.uid === uid
-						? 'block px-4 py-2 text-gray-700 bg-blue-100 rounded shadow'
-						: 'block px-4 py-2 text-gray-700 rounded shadow'
+						? 'block text-sm px-4 py-1 text-gray-700 bg-blue-100 rounded shadow'
+						: 'block text-sm px-4 py-1 text-gray-700 rounded shadow'
 				}
 			>
 				{message}

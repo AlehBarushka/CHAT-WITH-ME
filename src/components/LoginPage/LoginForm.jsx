@@ -1,9 +1,9 @@
+import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
-import React from 'react';
-import { signIn } from '../../actions';
 import { useDispatch } from 'react-redux';
+import { signIn } from '../../actions';
 
 const logInValidation = Yup.object().shape({
 	email: Yup.string().email('Email не верного формата').required('Пожалуйста, введите email'),

@@ -3,8 +3,8 @@ import { db } from '../service/firebaseConfig';
 import { userConstants } from './constatnts';
 
 export const updateMessage = (messageObj) => {
-	return async (dispatch) => {
-		await addDoc(collection(db, 'conversations'), {
+	return (dispatch) => {
+		addDoc(collection(db, 'conversations'), {
 			...messageObj,
 			isView: false,
 			createdAt: new Date(),

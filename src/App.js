@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { autoSignIn } from './actions';
 
-import HomePage from './components/HomePage';
+import ChatPage from './components/Chat';
 import LoginPage from './components/LoginPage';
 import SignUpPage from './components/SignUpPage';
 import Header from './components/Header';
@@ -22,7 +23,7 @@ const App = () => {
 		<Router>
 			<Header />
 			<Routes>
-				<Route path='/home' element={<HomePage auth={auth} />} />
+				<Route path='/' element={<ChatPage auth={auth} />} />
 				<Route path='/login' element={<LoginPage auth={auth} />} />
 				<Route path='/signup' element={<SignUpPage auth={auth} />} />
 			</Routes>

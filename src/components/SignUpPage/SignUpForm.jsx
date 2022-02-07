@@ -1,7 +1,8 @@
+import React from 'react';
 import { Field, Form, Formik } from 'formik';
-import { useDispatch } from 'react-redux';
-
 import * as Yup from 'yup';
+
+import { useDispatch } from 'react-redux';
 import { signUp } from '../../actions';
 
 const sigUpValidation = Yup.object().shape({

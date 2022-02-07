@@ -22,7 +22,6 @@ const User = (props) => {
 							}
 						></span>
 					</div>
-					<span className='block ml-2 text-sm text-gray-400'>последнее сообщение</span>
 				</div>
 			</div>
 		</>

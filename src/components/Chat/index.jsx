@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Chat from './Chat';
 
-const HomePage = ({ auth }) => {
+const ChatPage = ({ auth }) => {
 	return auth.isAuth ? <Chat /> : <Navigate to='/login' />;
 };
 
-export default HomePage;
+export default ChatPage;

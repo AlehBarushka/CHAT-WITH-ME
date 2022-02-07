@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+
 import User from './User';
 
 const UsersArea = (props) => {
@@ -34,7 +35,7 @@ const UsersArea = (props) => {
 					/>
 				</div>
 			</div>
-			<ul className='overflow-y-auto h-[40rem]'>
+			<ul className='overflow-y-auto h-[10rem] lg:h-[40rem] md:h-[40rem] sm:h-[20rem]'>
 				<h2 className='my-2 mb-2 ml-2 text-lg text-gray-600'>Пользователи</h2>
 				{users.length > 0
 					? users

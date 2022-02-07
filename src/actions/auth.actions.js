@@ -10,10 +10,10 @@ import { auth, db } from '../service/firebaseConfig';
 import { authConstants } from './constatnts';
 
 export const signUp = (user) => {
-	return async (dispatch) => {
+	return (dispatch) => {
 		dispatch({ type: authConstants.USER_LOGIN_REQUEST });
 		try {
-			let response = await createUserWithEmailAndPassword(auth, user.email, user.password);
+			let response = createUserWithEmailAndPassword(auth, user.email, user.password);
 			updateProfile(auth.currentUser, { displayName: user.userName });
 			setDoc(doc(db, 'users', response.user.uid), {
 				userName: user.userName,
@@ -34,10 +34,10 @@ export const signUp = (user) => {
 };
 
 export const signIn = (user) => {
-	return async (dispatch) => {
+	return (dispatch) => {
 		dispatch({ type: authConstants.USER_LOGIN_REQUEST });
 		try {
-			let response = await signInWithEmailAndPassword(auth, user.email, user.password);
+			let response = signInWithEmailAndPassword(auth, user.email, user.password);
 			const ref = doc(db, 'users', response.user.uid);
 			updateDoc(ref, {
 				isOnline: true,
@@ -73,7 +73,7 @@ export const autoSignIn = () => {
 };
 
 export const logout = (uid) => {
-	return async (dispatch) => {
+	return (dispatch) => {
 		dispatch({ type: authConstants.USER_LOGOUT_REQUEST });
 		try {
 			const ref = doc(db, 'users', uid);

@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
+import { useEffect } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '../../actions';
+
 import Message from './Message';
-import { useEffect } from 'react';
 
 const ChatArea = (props) => {
 	const { auth, recipientUid, conversations, recipientUserName, message, setMessage } = props;
@@ -35,7 +37,7 @@ const ChatArea = (props) => {
 				/>
 				<span className='block ml-2 font-bold text-gray-600'>{recipientUserName}</span>
 			</div>
-			<div className='w-full p-6 overflow-y-auto h-[40rem]'>
+			<div className='w-full p-6 overflow-y-auto h-[20rem] lg:h-[40rem] md:h-[40rem] sm:h-[20rem]'>
 				<div className='flex flex-col'>
 					{conversations.messages.map((message) => (
 						<Message auth={auth} key={message.createdAt.seconds} uid={message.senderUid} message={message.message} />
