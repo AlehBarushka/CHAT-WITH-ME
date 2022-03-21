@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducers from '../slices';
+import conversationsReducer from '../reducers/conversations.reducer';
+import authReducer from '../slices/authSlice';
 
 const store = configureStore({
-	reducer: rootReducers,
+	reducer: { authData: authReducer, conversations: conversationsReducer },
 });
 
 export default store;
