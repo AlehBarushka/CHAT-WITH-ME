@@ -6,8 +6,14 @@ import { updateMessage } from '../../actions';
 
 import Message from './Message';
 
-const ChatArea = (props) => {
-	const { auth, recipientUid, conversations, recipientUserName, message, setMessage } = props;
+const ChatArea = ({
+	auth,
+	recipientUid,
+	conversations,
+	recipientUserName,
+	message,
+	setMessage,
+}) => {
 	const dispatch = useDispatch();
 	const messagesEndRef = useRef(null);
 
@@ -41,12 +47,19 @@ const ChatArea = (props) => {
 					src='https://www.opensds.io/wp-content/uploads/sites/18/2019/03/user-unknown-1-300x300.png'
 					alt='userAvatar'
 				/>
-				<span className='block ml-2 font-bold text-gray-600'>{recipientUserName}</span>
+				<span className='block ml-2 font-bold text-gray-600'>
+					{recipientUserName}
+				</span>
 			</div>
 			<div className='w-full p-6 overflow-y-auto h-[20rem] lg:h-[40rem] md:h-[40rem] sm:h-[20rem]'>
 				<div className='flex flex-col'>
 					{conversations.messages.map((message) => (
-						<Message auth={auth} key={message.createdAt.seconds} uid={message.senderUid} message={message.message} />
+						<Message
+							auth={auth}
+							key={message.createdAt.seconds}
+							uid={message.senderUid}
+							message={message.message}
+						/>
 					))}
 					<div ref={messagesEndRef} />
 				</div>

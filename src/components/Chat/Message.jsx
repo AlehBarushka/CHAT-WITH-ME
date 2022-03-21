@@ -1,10 +1,14 @@
 import React from 'react';
 
-const Message = (props) => {
-	const { message, uid, auth } = props;
-
+const Message = ({ message, uid, auth }) => {
 	return (
-		<div className={auth.uid === uid ? 'flex justify-end mt-1 w-full' : 'flex justify-start mt-1 w-full'}>
+		<div
+			className={
+				auth.uid === uid
+					? 'flex justify-end mt-1 w-full'
+					: 'flex justify-start mt-1 w-full'
+			}
+		>
 			<p
 				className={
 					auth.uid === uid

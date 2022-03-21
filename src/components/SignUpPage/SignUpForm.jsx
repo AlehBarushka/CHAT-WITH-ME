@@ -3,12 +3,16 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { useDispatch } from 'react-redux';
-import { signUp } from '../../actions';
+import { signUp } from '../../slices/authSlice';
 
 const sigUpValidation = Yup.object().shape({
 	userName: Yup.string().required('Пожалуйста, введите имя'),
-	email: Yup.string().email('Email не верного формата').required('Пожалуйста, введите email'),
-	password: Yup.string().min(6, 'Пароль должен содержать не менее 6 символов').required('Пожалуйста, введите пароль'),
+	email: Yup.string()
+		.email('Email не верного формата')
+		.required('Пожалуйста, введите email'),
+	password: Yup.string()
+		.min(6, 'Пароль должен содержать не менее 6 символов')
+		.required('Пожалуйста, введите пароль'),
 });
 
 const SignUpForm = () => {
@@ -29,7 +33,10 @@ const SignUpForm = () => {
 					{({ errors, touched }) => (
 						<Form className='flex flex-col mt-4'>
 							<div className='mb-4'>
-								<label className='block text-grey-darker text-sm font-bold mb-2' htmlFor='userName'>
+								<label
+									className='block text-grey-darker text-sm font-bold mb-2'
+									htmlFor='userName'
+								>
 									Имя
 								</label>
 								<Field
@@ -38,10 +45,15 @@ const SignUpForm = () => {
 									className='block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none '
 									placeholder='Имя'
 								/>
-								{touched.userName && errors.userName && <div className='text-red-500 text-xs'>{errors.userName}</div>}
+								{touched.userName && errors.userName && (
+									<div className='text-red-500 text-xs'>{errors.userName}</div>
+								)}
 							</div>
 							<div className='mb-4'>
-								<label className='block text-grey-darker text-sm font-bold mb-2' htmlFor='email'>
+								<label
+									className='block text-grey-darker text-sm font-bold mb-2'
+									htmlFor='email'
+								>
 									Email
 								</label>
 								<Field
@@ -50,10 +62,15 @@ const SignUpForm = () => {
 									className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none '
 									placeholder='Email'
 								/>
-								{touched.email && errors.email && <div className='text-red-500 text-xs'>{errors.email}</div>}
+								{touched.email && errors.email && (
+									<div className='text-red-500 text-xs'>{errors.email}</div>
+								)}
 							</div>
 							<div className='mb-6'>
-								<label htmlFor='password' className='block text-grey-darker text-sm font-bold mb-2'>
+								<label
+									htmlFor='password'
+									className='block text-grey-darker text-sm font-bold mb-2'
+								>
 									Пароль
 								</label>
 								<Field
@@ -62,7 +79,9 @@ const SignUpForm = () => {
 									className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 									placeholder='Password'
 								/>
-								{touched.password && errors.password && <div className='text-red-500 text-xs'>{errors.password}</div>}
+								{touched.password && errors.password && (
+									<div className='text-red-500 text-xs'>{errors.password}</div>
+								)}
 							</div>
 							<button
 								type='submit'

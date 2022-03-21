@@ -3,7 +3,7 @@ import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../actions';
+import { signIn } from '../../slices/authSlice';
 
 const logInValidation = Yup.object().shape({
 	email: Yup.string()
@@ -11,8 +11,7 @@ const logInValidation = Yup.object().shape({
 		.required('Пожалуйста, введите email'),
 	password: Yup.string().required('Пожалуйста, введите пароль'),
 });
-
-const LoginForm = (props) => {
+const LoginForm = () => {
 	const dispatch = useDispatch();
 
 	const signInUser = (values) => {
