@@ -10,7 +10,7 @@ import UsersArea from './UsersArea';
 
 const Chat = () => {
 	const dispatch = useDispatch();
-	const auth = useSelector((state) => state.auth);
+	const authData = useSelector((state) => state.authData);
 	const conversations = useSelector((state) => state.conversations);
 	const [chatStarted, setChatStarted] = useState(false);
 	const [recipientUserName, setRecipientUserName] = useState('');
@@ -21,12 +21,14 @@ const Chat = () => {
 		setChatStarted(true);
 		setRecipientUserName(user.userName);
 		setRecipientUid(user.uid);
-		dispatch(getRealTimeMessages({ senderUid: auth.uid, recipientUid: user.uid }));
+		dispatch(
+			getRealTimeMessages({ senderUid: authData.uid, recipientUid: user.uid })
+		);
 	};
 
 	// subcribe for realtime update users and unsubscribe after unmount
 	useEffect(() => {
-		const unsubscribe = dispatch(getRealTimeUsers(auth.uid))
+		const unsubscribe = dispatch(getRealTimeUsers(authData.uid))
 			.then((unsubscribe) => {
 				return unsubscribe;
 			})
@@ -40,7 +42,7 @@ const Chat = () => {
 				})
 				.catch((error) => console.log(error));
 		};
-	}, [dispatch, auth.uid]);
+	}, [dispatch, authData.uid]);
 
 	return (
 		<div className='mt-5 lg:mt-10 md:mt-10 sm:mt-10 container mx-auto'>
@@ -50,9 +52,9 @@ const Chat = () => {
 					{chatStarted ? (
 						<ChatArea
 							conversations={conversations}
-							auth={auth}
+							auth={authData}
 							recipientUserName={recipientUserName}
-							senderUser={auth}
+							senderUser={authData}
 							recipientUid={recipientUid}
 							message={message}
 							setMessage={setMessage}
