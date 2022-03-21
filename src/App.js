@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { autoSignIn } from './actions';
+
+import { onAuthStateChanged } from 'firebase/auth';
+import { setCurrentUser } from './slices/authSlice';
+import { auth } from './service/firebaseConfig';
 
 import ChatPage from './components/Chat';
 import LoginPage from './components/LoginPage';
@@ -11,21 +13,28 @@ import Header from './components/Header';
 
 const App = () => {
 	const dispatch = useDispatch();
-	const auth = useSelector((state) => state.auth);
+	const authData = useSelector((state) => state.authData);
 
 	useEffect(() => {
-		if (!auth.isAuth) {
-			dispatch(autoSignIn());
-		}
-	}, [dispatch, auth.isAuth]);
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const loggedInUser = {
+					userName: user.displayName,
+					uid: user.uid,
+					email: user.email,
+				};
+				dispatch(setCurrentUser(loggedInUser));
+			}
+		});
+	}, [dispatch]);
 
 	return (
 		<Router>
 			<Header />
 			<Routes>
-				<Route path='/' element={<ChatPage auth={auth} />} />
-				<Route path='/login' element={<LoginPage auth={auth} />} />
-				<Route path='/signup' element={<SignUpPage auth={auth} />} />
+				<Route path='/' element={<ChatPage authData={authData} />} />
+				<Route path='/login' element={<LoginPage authData={authData} />} />
+				<Route path='/signup' element={<SignUpPage authData={authData} />} />
 			</Routes>
 		</Router>
 	);
