@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from '../../slices/authSlice';
+
 const Header = () => {
 	const dispatch = useDispatch();
 	const authData = useSelector((state) => state.authData);
+	const currentUser = authData.currentUser;
 
 	const logoutUser = () => {
-		const uid = authData.uid;
-		dispatch(logOut(uid));
+		dispatch(logOut(currentUser.uid));
 	};
 
 	return (
@@ -19,7 +19,7 @@ const Header = () => {
 				CHAT-WITH-ME
 			</div>
 			{authData.isAuth ? (
-				<div className='font-semibold text-xl text-white tracking-tight'>{`Привет ${authData.userName}!`}</div>
+				<div className='font-semibold text-xl text-white tracking-tight'>{`Привет ${currentUser.userName}!`}</div>
 			) : null}
 			<div>
 				{authData.isAuth ? (

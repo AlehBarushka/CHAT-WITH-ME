@@ -78,11 +78,9 @@ export const logOut = createAsyncThunk(
 );
 
 const initState = {
-	userName: '',
-	uid: '',
-	email: '',
+	currentUser: null,
 	isAuth: false,
-	isAuthing: false,
+	isLoading: false,
 	error: null,
 };
 
@@ -94,46 +92,43 @@ const authSlice = createSlice({
 		setCurrentUser(state, { payload }) {
 			state.isAuth = true;
 			state.error = null;
-			state.userName = payload.userName;
-			state.email = payload.email;
-			state.uid = payload.uid;
+			state.currentUser = payload;
 		},
 	},
 	extraReducers: {
 		[signUp.pending]: (state) => {
-			state.isAuthing = true;
+			state.isLoading = true;
 		},
 		[signUp.fulfilled]: (state, { payload }) => {
 			state.isLoading = false;
 			state.isAuth = true;
 			state.error = null;
-			state.email = payload.email;
-			state.uid = payload.uid;
-			state.userName = payload.userName;
+			state.currentUser = payload;
 		},
 		[signUp.rejected]: (state, { payload }) => {
-			state.isAuthing = false;
+			state.isLoading = false;
 			state.isAuth = false;
+			state.currentUser = null;
 			state.error = payload;
 		},
 		[signIn.pending]: (state) => {
-			state.isAuthing = true;
+			state.isLoading = true;
 		},
 		[signIn.fulfilled]: (state, { payload }) => {
 			state.isLoading = false;
 			state.isAuth = true;
 			state.error = null;
-			state.email = payload.email;
-			state.uid = payload.uid;
-			state.userName = payload.userName;
+			state.currentUser = payload;
 		},
 		[signIn.rejected]: (state, { payload }) => {
-			state.isAuthing = false;
+			state.isLoading = false;
 			state.isAuth = false;
+			state.currentUser = null;
 			state.error = payload;
 		},
 		[logOut.fulfilled]: (state) => {
 			state.isAuth = false;
+			state.currentUser = null;
 			state.error = null;
 		},
 		[logOut.rejected]: (state, { payload }) => {
